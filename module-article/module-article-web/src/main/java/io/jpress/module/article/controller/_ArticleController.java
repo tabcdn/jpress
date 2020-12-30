@@ -223,6 +223,11 @@ public class _ArticleController extends AdminControllerBase {
         Long[] categoryIds = getParaValuesToLong("category");
         Long[] tagIds = getTagIds(getParaValues("tag"));
 
+        // 如果没有选择分类,给一个默认分类
+        if (categoryIds == null || categoryIds.length == 0){
+            categoryIds = new Long[]{1L};
+        }
+
         Long[] updateCategoryIds = ArrayUtils.addAll(categoryIds, tagIds);
 
         articleService.doUpdateCategorys(id, updateCategoryIds);
