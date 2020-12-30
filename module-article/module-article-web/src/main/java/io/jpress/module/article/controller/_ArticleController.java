@@ -43,6 +43,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Michael Yang 杨福海 （fuhai999@gmail.com）
@@ -177,6 +178,18 @@ public class _ArticleController extends AdminControllerBase {
         }
     }
 
+    /**
+     * 生成唯一slug
+     */
+    private String generateUniqueSlug(){
+        String slug = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+
+        Article existArticle = articleService.findFirstBySlug(slug);
+        if (existArticle != null) {
+            return generateUniqueSlug();
+        }
+        return slug;
+    }
 
     @EmptyValidate({
             @Form(name = "article.title", message = "标题不能为空"),
@@ -198,6 +211,11 @@ public class _ArticleController extends AdminControllerBase {
                 renderJson(Ret.fail("message", "该slug已经存在"));
                 return;
             }
+        }
+
+        //使用16位uuid作为文章slug
+        if (StrUtil.isBlank(article.getSlug()) ){
+            article.setSlug(generateUniqueSlug());
         }
 
         if (article.getOrderNumber() == null) {
