@@ -319,6 +319,9 @@ public class _ArticleController extends AdminControllerBase {
     })
     public void doCategorySave() {
         ArticleCategory category = getModel(ArticleCategory.class, "category");
+        if (category.getOrderNumber() == null){
+            category.setOrderNumber(0);
+        }
         saveCategory(category);
     }
 

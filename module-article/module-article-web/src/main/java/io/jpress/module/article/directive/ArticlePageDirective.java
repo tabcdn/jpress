@@ -51,7 +51,7 @@ public class ArticlePageDirective extends JbootDirectiveBase {
 
         int page = controller.getParaToInt(1, 1);
         int pageSize = getParaToInt("pageSize", scope, 10);
-        String orderBy = getPara("orderBy", scope, "id desc");
+        String orderBy = getPara("orderBy", scope, "order_number asc,id desc");
 
         // 可以指定当前的分类ID
         Long categoryId = getParaToLong("categoryId", scope, 0L);

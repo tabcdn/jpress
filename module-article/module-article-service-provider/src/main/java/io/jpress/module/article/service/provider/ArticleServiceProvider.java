@@ -111,7 +111,7 @@ public class ArticleServiceProvider extends JbootServiceBase<Article> implements
         Page<Article> dataPage = DAO.leftJoinIf("article_category_mapping", categoryId != null)
                 .as("m")
                 .on("article.id = m.article_id")
-                .paginateByColumns(page, pagesize, columns, "id desc");
+                .paginateByColumns(page, pagesize, columns, "order_number asc,id desc");
 
 
         return joinUserInfo(dataPage);
